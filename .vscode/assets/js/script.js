@@ -15,8 +15,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     e.preventDefault();
 
-    if (name === '' || email === '' || message === '' || subject === '') {
-      alert('Please fill in all fields.');
+    if (name === '' || !validateEmail(email) || message === '' || subject === '') {
+      alert('Please fill in all fields or enter a valid email.');
     } else {
       alert('Message sent successfully!');
       console.log('Name: ' + name + ' Email: ' + email + ' Message: ' + message + ' Subject: ' + subject);
@@ -24,6 +24,12 @@ document.addEventListener('DOMContentLoaded', (event) => {
     return false; // Prevent page refresh
   });
 });
+
+function validateEmail(email) {
+  const re = /\S+@\S+\.\S+/;
+  return re.test(email);
+}
+
 /**
  * add event on element
  */
@@ -60,9 +66,9 @@ const closeNavbar = function () {
   navToggler.classList.remove("active");
 }
 
-addEventOnelem(navbarLinks, "click", closeNavbar);
-
-
+Array.from(navbarLinks).forEach(link => {
+  addEventOnelem(link, "click", closeNavbar);
+});
 
 /**
  * header active on scroll down to 100px
@@ -96,7 +102,9 @@ const navigateTab = function () {
   lastTabCard = this;
 }
 
-addEventOnelem(tabCard, "click", navigateTab);
+Array.from(tabCard).forEach(card => {
+  addEventOnelem(card, "click", navigateTab);
+});
 
 // Book Exchange Hub 
 function validateAndConnect() {
